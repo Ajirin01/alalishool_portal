@@ -22,9 +22,11 @@
                         <div class="col-md-12">
                         <div class="card card-outline card-info">
                             <div class="card-body">
-                            <textarea id="summernote{{$questionId}}question">
-                                {{ $question }}
-                            </textarea>
+                                <div class="textArea" id="summernote{{$questionId}}question">
+                                    @php
+                                        echo $question;
+                                    @endphp
+                                </div>
                             </div>
                         </div>
                         </div>
@@ -41,7 +43,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <span data-toggle="modal" data-target="#modal-xl{{$questionId}}question" onclick="initTextArea('summernote'+{{$questionId}}+'question')"><i class="fa fa-edit" ></i></span>
+    <span data-toggle="modal" data-target="#modal-xl{{$questionId}}question"><i class="fa fa-edit" ></i></span>
 
     {{-- question delete model --}}
     <div class="modal fade" id="modal-danger{{$questionId}}question">

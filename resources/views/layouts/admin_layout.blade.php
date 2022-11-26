@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Al-Ali CBT Admin Portal</title>
+    <!-- Style -->
+    <link rel="stylesheet" href="{{ asset('typemath/css/style.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset( 'adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- daterange picker -->
@@ -27,8 +29,9 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'adminlte/dist/css/adminlte.min.css') }}">
 
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset( 'adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- Style -->
+    {{-- <link rel="stylesheet" href="{{ asset('typemath/css/style.css') }}"> --}}
+
 
     <link rel="stylesheet" href="{{ asset( 'adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset( 'adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -44,6 +47,14 @@
     {{-- <script src="{{ asset( 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
 
     <script src="{{ asset( 'adminlte/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> --}}
+
+    <!-- Editor Plugin -->
+    <link type="text/css" rel="stylesheet" href="''"/>
+    @stack('typemath-scripts')
+    <!-- Style for html code -->
+    {{-- <link type="text/css" rel="stylesheet" href="{{ asset('typemath/css/prism.css') }}" /> --}}
 
     <style>
       i{
@@ -291,12 +302,7 @@
     <script src="{{ asset( 'adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset( 'adminlte/dist/js/adminlte.min.js') }}"></script>
-
-    <!-- AdminLTE for demo purposes -->
-    {{-- <script src="{{ asset( 'adminlte/dist/js/demo.js') }}"></script> --}}
-    <!-- Summernote -->
-    <script src="{{ asset( 'adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
-
+    
     <!-- DataTables  & Plugins -->
     <script src="{{ asset( 'adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset( 'adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -407,7 +413,7 @@
         //     window.stepper = new Stepper(document.querySelector('.bs-stepper'))
         // })
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function(){
           // $('#summernote').summernote()
           $('#summernote1addquestion').summernote()
@@ -422,10 +428,15 @@
         }
         
 
-    </script>
+    </script> --}}
 
     {{-- custom scripts for ajax and alert --}}
     <script>
+        var js = document.createElement("script");
+        js.type = "text/javascript";
+        js.src = "/typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image";
+        document.head.appendChild(js);
+
         var Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -490,14 +501,19 @@
                 changeAnswerOutputStyle(noun, updateID, res)
             }
 
-            document.getElementById(noun + updateID + "output").innerHTML =   res.data[field]
+            document.getElementById(noun + updateID + "output").innerHTML = res.data[field]
             console.log(res.data[field])
+            com.wiris.js.JsPluginViewer.parseDocument();
 
             document.getElementById("closeupdate" + updateID + noun).click() 
             // console.log(res.message)
             successAlert("<h5>"+ res.message +"</h5>")
             document.getElementById('ajax-loader').style.display = 'none'
             $('.modal').css('opacity', 1)
+
+            // if(res.data[field].includes("xmlns")){
+            //   window.location.reload()
+            // }
           })
         }
 
@@ -541,6 +557,7 @@
                 }).
                 then(response => response.json()).
                 then(res => {
+                  console.log(res)
                     let params = ""
 
                     res.data.forEach((nounObject, index) => {
@@ -555,11 +572,14 @@
                         }).then(comRes => comRes.text()).then(component => {
                             document.getElementById(noun+"-table-body").innerHTML += component
                             // console.log(component)
+                            com.wiris.js.JsPluginViewer.parseDocument();
 
                             successAlert("<h5>"+ res.message +"</h5>")
                             
                             $("#text"+ (index + 1) +"add"+noun).val('')
-                            $("#summernote"+ (index + 1) +"add"+noun).summernote('code', '')
+                            // $("#summernote"+ (index + 1) +"add"+noun).summernote('code', '')
+                            // tinymce.get("summernote"+ (index + 1) +"add"+noun).setContent('')
+                            tinymce.activeEditor.setContent('')
 
                             $('#custom-tabs-five-normal2').css('opacity', 1)
                             document.getElementById('ajax-loader2').style.display = 'none'

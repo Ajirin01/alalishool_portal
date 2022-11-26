@@ -13,9 +13,9 @@
                     <div class="col-md-12">
                     <div class="card card-outline card-info">
                         <div class="card-body">
-                        <textarea id="summernote-add{{$questionId}}question_answer" required>
+                        <div class="textArea" id="summernote-add{{$questionId}}question_answer" required>
                             
-                        </textarea>
+                        </div>
 
                         <div>
                             <input type="radio" id="correct{{$questionId}}" value="1" name="correct{{$questionId}}" onchange="handCorrectChanged()">
@@ -41,13 +41,13 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <span data-toggle="modal" data-target="#modal-xl-add{{$questionId}}question_answer" onclick="initTextArea('summernote-add'+{{$questionId}}+'question_answer')"><i class="fa fa-plus" ></i> click to add answers </span>
+    <span data-toggle="modal" data-target="#modal-xl-add{{$questionId}}question_answer"><i class="fa fa-plus" ></i> click to add answers </span>
 </li>
 
 <script>
     function addAnswer(questionID, noun){
         let textAreaID = "summernote-add" + questionID + noun
-        let answer = $("#"+textAreaID).summernote('code')
+        let answer = tinymce.get(textAreaID).getContent()
 
         let data = [
             {
@@ -57,7 +57,7 @@
             }
         ]
 
-        if($("#"+textAreaID).summernote('code').trim().length == 0){
+        if(tinymce.get(textAreaID).getContent().trim().length == 0){
             errorAlert("<h5>Answer can not be empty!</h5>")
         }else{
             $('.modal').css('opacity', 0)
@@ -87,17 +87,20 @@
                     }
                 }).then(comRes => comRes.text()).then(component => {
                     document.getElementById("answer-list" + questionID).innerHTML += component
+                    com.wiris.js.JsPluginViewer.parseDocument();
                 })
                 
                 // console.log(res.message)
                 successAlert("<h5>"+ res.message +"</h5>")
                 document.getElementById('ajax-loader').style.display = 'none'
                 $('.modal').css('opacity', 1)
-                $("#"+textAreaID).summernote('code', '')
+                // $("#"+textAreaID).summernote('code', '')
+                tinymce.activeEditor.setContent('')
+
                 correct = false
             })
 
-            // console.log($("#"+textAreaID).summernote('code'))
+            // console.log(tinymce.get(textAreaID).getContent())
         }
     }
 </script>

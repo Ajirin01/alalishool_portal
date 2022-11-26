@@ -10,6 +10,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Al-Ali International School CBT</title>
 
+  <script src="{{ asset('typemath/js/codemirror.min.js') }}"></script>
+  <script src="{{ asset('typemath/js/xml.min.js') }}"></script>
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset( 'adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
@@ -275,11 +278,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 
+<script src="{{ asset('typemath/js/prism.js') }}"></script>
 <!-- jQuery -->
 <script src="{{ asset( 'adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset( 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
 
 <script>
     const user = {{ Js::from(Auth::user())}}

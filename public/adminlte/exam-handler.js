@@ -171,6 +171,10 @@ function getAnswers(question_number, answers){
 }
 
 function renderComponents(current_page){
+    var js = document.createElement("script");
+    js.type = "text/javascript";
+    js.src = "/typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image";
+    document.head.appendChild(js);
     var current_page_data = current_page.data
     // console.log(current_page.page)
     questions_container.innerHTML = ""
@@ -185,6 +189,8 @@ function renderComponents(current_page){
         questions_container_inner_element += '</div>'
 
         questions_container.innerHTML += questions_container_inner_element
+
+        com.wiris.js.JsPluginViewer.parseDocument();
 
     }
 

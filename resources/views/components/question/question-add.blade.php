@@ -13,7 +13,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="card-body">
-                    <textarea id="summernote{{$i}}addquestion">
+                    <textarea class="textArea" id="summernote{{$i}}addquestion">
                     </textarea>
                 </div>
             </div>
@@ -40,7 +40,7 @@
     function addQuestions(noun){
         var data = []
         for (let i = 1; i <= 5; i++) {
-            let question = $("#summernote"+i+"addquestion").summernote('code')
+            let question = tinymce.get("summernote"+i+"addquestion").getContent()
 
             if (question.trim().length !== 0) {
                 data.push({

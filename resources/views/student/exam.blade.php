@@ -94,6 +94,8 @@
     </div>
     
 
+    <script type="text/javascript" src="{{ asset('typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image') }}"></script>
+
     <script src="{{ asset('adminlte/paginator.js') }}"></script>
     <script src="{{ asset('adminlte/query-object.js') }}"></script>
     <script>

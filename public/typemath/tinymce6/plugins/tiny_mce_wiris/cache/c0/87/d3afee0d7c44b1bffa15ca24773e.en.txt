@@ -1,0 +1,1 @@
+{"result":{"text":"sin theta squared minus cos squared ϕ"},"status":"ok"}
