@@ -32,7 +32,7 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">Students result by Year, Term, Class, Subject, Exam and Exam Paper</h3>
+                                        <h3 class="card-title">Students result for: {{strtoupper($exam_paper->name)}}</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">

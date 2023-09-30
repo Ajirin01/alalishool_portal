@@ -12,7 +12,9 @@ class ClassesController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> Classes::with('teacher_classes')->get()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Classes::paginate(20)], status:Response::HTTP_OK);
+
+        // return response()->json(['message'=> 'success', 'data'=> Classes::with('teacher_classes')->get()], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)
@@ -26,7 +28,7 @@ class ClassesController extends Controller
 
     public function show($id)
     {
-        return response()->json(['message'=> 'success', 'data'=> Classes::with('teacher_classes')->where('id',$id)->first()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Classes::find($id)], status:Response::HTTP_OK);
     }
     
     public function update(Request $request, $id)

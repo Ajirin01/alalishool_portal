@@ -12,7 +12,7 @@ class ResultController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> Result::with('subject', 'classes', 'year', 'exam_paper', 'student', 'exam', 'term')->get()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Result::paginate(100)], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)
@@ -22,7 +22,7 @@ class ResultController extends Controller
 
     public function show($id)
     {
-        return response()->json(['message'=> 'success', 'data'=> Result::with('subject', 'classes', 'year', 'exam_paper', 'student', 'exam', 'term')->where('id', $id)->first()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Result::find($id)], status:Response::HTTP_OK);
     }
     
     public function update(Request $request, $id)

@@ -12,7 +12,7 @@ class QuestionAnswerController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> QuestionAnswer::all()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> QuestionAnswer::paginate(50)], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)

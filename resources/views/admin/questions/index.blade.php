@@ -4,7 +4,7 @@
     @push('typemath-scripts')
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-        <script type="text/javascript" src="{{ asset('typemath/tinymce6/tinymce.min.js') }}"></script>
+        <script type="text/javascript" src="{{URL::to('/typemath/tinymce6/tinymce.min.js')}}"></script>
     @endpush
     <div class="row">
         <div class="col-md-12">
@@ -16,6 +16,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-five-overlay-dark-tab2" data-toggle="pill" href="#custom-tabs-five-overlay-dark2" role="tab" aria-controls="custom-tabs-five-overlay-dark2">Add Questions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-five-overlay-dark-tab3" data-toggle="pill" href="#custom-tabs-five-overlay-dark3" role="tab" aria-controls="custom-tabs-five-overlay-dark3">Import Questions</a>
                         </li>
                     </ul>
                 </div>
@@ -84,6 +87,16 @@
                             </div>
                             {{-- /. Add Question --}}
                         </div>
+
+                        {{-- Import Questions --}}
+                        <div class="tab-pane fade show" id="custom-tabs-five-overlay-dark3" role="tabpanel" aria-labelledby="custom-tabs-five-overlay-dark-tab2">
+                            <div class="overlay-wrapper">
+                                {{-- add question component --}}
+                                <div style="display: none; text-align: center" class="overlay dark" id="ajax-loader2"><i style="position: fixed; margin-top: 20vh" class="fas fa-3x fa-sync-alt fa-spin"></i></div>
+                                <x-question.question-import />
+                            </div>
+                            {{-- /. Add Question --}}
+                        </div>
                     </div>
                     <!-- /.card -->
                 </div>
@@ -91,7 +104,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="{{ asset('typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image') }}"></script>
+    <script type="text/javascript" src="{{ URL::to('typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image') }}"></script>
 	<script>
 		tinymce.init({
 			selector: '.textArea',

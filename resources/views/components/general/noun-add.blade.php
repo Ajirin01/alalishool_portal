@@ -31,12 +31,13 @@
         
     })
 
-    var data = []
+    
 
     function add(noun){
+        var data = []
         let key = {{Js::from($key)}}
         console.log(key)
-        loopTextFieldsToData(noun, key)
+        data = loopTextFieldsToData(noun, key, data)
         let component_url = "/components/general-table-body-row-3-col"
 
         addRecords(noun, component_url, data, key)

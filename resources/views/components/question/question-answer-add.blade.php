@@ -63,7 +63,7 @@
             $('.modal').css('opacity', 0)
             document.getElementById('ajax-loader').style.display = 'block'
 
-            fetch("/api/"+noun+"s/", {
+            fetch("{{URL::to('')}}"+"/api/"+noun+"s", {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json'
@@ -77,7 +77,7 @@
                 let component_url = ""
                 let params = ""
                 
-                component_url = "/components/question-answer-area"
+                component_url = "{{URL::to('')}}"+"/components/question-answer-area"
                 params = "?answer=" + answer + "&answerId=" + res.data[0].id + "&correct=" + Number(correct)
 
                 fetch(component_url + params, {

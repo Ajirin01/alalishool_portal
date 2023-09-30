@@ -142,7 +142,7 @@
                 $('#custom-tabs-five-normal2').css('opacity', 0)
                 document.getElementById('ajax-loader2').style.display = 'block'
 
-                fetch("/api/"+noun+"s/", {
+                fetch("{{URL::to('')}}"+"/api/"+noun+"s", {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json'
@@ -154,7 +154,7 @@
                     let params = ""
                     let componentUrl = ""
 
-                    componentUrl = "/components/exam-table-body-row"
+                    componentUrl = "{{URL::to('')}}"+"/components/exam-table-body-row"
                     params = "?id=" + res.data.id + "& noun= " + noun
 
                     fetch(componentUrl + params, {
@@ -206,7 +206,7 @@
             $('.modal').css('opacity', 0)
             document.getElementById('ajax-loader').style.display = 'block'
 
-            fetch("/api/exams/" + id, {
+            fetch("{{URL::to('')}}"+"/api/exams/" + id, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json'

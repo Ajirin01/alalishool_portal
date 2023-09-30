@@ -32,10 +32,10 @@
         
     })
 
-    var exam_id = 2
-    var classes_id = 4
-    var subject_id = 2
-    var exam_paper_id = 3
+    var exam_id 
+    var classes_id 
+    var subject_id 
+    var exam_paper_id
 
     function addQuestions(noun){
         var data = []
@@ -55,52 +55,7 @@
         console.clear()
         console.log(data)
 
-        // if(data.length > 0){
-        //     $('#custom-tabs-five-normal2').css('opacity', 0)
-        //     document.getElementById('ajax-loader2').style.display = 'block'
-
-        //     fetch("/api/"+noun+"s/", {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-type': 'application/json'
-        //         },
-        //         body: JSON.stringify(data)
-        //     }).
-        //     then(response => response.json()).
-        //     then(res => {
-
-        //         let component_url = ""
-        //         let params = ""
-
-        //         res.data.forEach((questionObjeect, index) => {
-        //             component_url = "/components/question-table-body-row"
-        //             params = "?id=" + questionObjeect.id
-
-
-        //             fetch(component_url + params, {
-        //                 method: "GET",
-        //                 headers: {
-        //                     'Content-type': 'application/json'
-        //                 }
-        //             }).then(comRes => comRes.text()).then(component => {
-        //                 document.getElementById("question-table-body").innerHTML += component
-        //                 // console.log(component)
-
-        //                 successAlert("<h5>"+ res.message +"</h5>")
-                        
-        //                 $("#summernote"+ (index + 1) +"addquestion").summernote('code', '')
-        //                 $('#custom-tabs-five-normal2').css('opacity', 1)
-        //                 document.getElementById('ajax-loader2').style.display = 'none'
-        //             })
-        //         })
-                
-        //         data = []
-        //     })
-        // }else{
-        //     errorAlert("<h5>Can not submit!</h5> <p>Please Fill one or more questions</p>")
-        // }
-
-        let componentUrl = "/components/question-table-body-row"
+        let componentUrl = "{{URL::to('')}}"+"/components/question-table-body-row"
 
         addRecords(noun, componentUrl, data)
         

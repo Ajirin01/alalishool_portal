@@ -32,40 +32,46 @@
                     <div class="card-header">
                         <h5 class="m-0">Welcome {{ Auth::user()->name }}</h5>
                     </div>
-
-                    <div id="loading">Loading...</div>
-
                     {{-- exam exist and student can take exam --}}
-                    <div class="card-body" id="exam-paper-exist" style="display: none">
-                        <h6 class="card-title">Exam is ready</h6>
+                    @if ($message === 'exam and no result')
+                        <div class="card-body" id="exam-paper-exist">
+                            <h6 class="card-title">Exam is ready</h6>
 
-                        <p class="card-text">Please read instructions before attempting exams questions</p> 
+                            <p class="card-text">Please read instructions before attempting exams questions</p> 
 
-                        <h4>Instructions</h4>
-                        <p id="instruction"></p>
+                            <h4>Instructions</h4>
+                            <p id="instruction"></p>
 
-                        <form action="{{ route('student-exam') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="classes_id" id="classes_id">
-                            <input type="submit" class="btn btn-primary" value="Start exam">
-                        </form>
-                    </div>
+                            {{-- <form action="{{ route('student-exam') }}" method="POST"> --}}
+                            <form action="{{ route('set-exam') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="classes_id" id="classes_id">
+                                <input type="hidden" name="exam_paper_id" id="exam_paper_id">
+                                <input type="submit" class="btn btn-primary" value="Start exam">
+                            </form>
+                        </div>
+                    @endif
 
                     {{-- no exam at the moment --}}
-                    <div class="card-body" id="exam-paper-not-exist" style="display: none">
-                        <h6 class="card-title">No exam questions found!</h6>
+                    @if ($message === 'no exam and result')
+                        <div class="card-body" id="exam-paper-not-exist">
+                            <h6 class="card-title">No exam questions found!</h6>
 
-                        <p class="card-text">Please there is not exam for you at the moment</p>
-                        <a href="{{ route('student-logout') }}" class="btn btn-primary">Logout</a>
-                    </div>
+                            <p class="card-text">Please there is no exam for you at the moment</p>
+                            <a href="{{ route('student-logout') }}" class="btn btn-primary">Logout</a>
+                        </div>
+                    @endif
 
+                
                     {{-- exam already taken --}}
-                    <div class="card-body" id="result-exist" style="display: none">
-                        <h6 class="card-title">Exam already taken!</h6>
+                    @if ($message === 'exam and result')
+                        <div class="card-body" id="result-exist">
+                            <h6 class="card-title">Exam already taken!</h6>
 
-                        <p class="card-text">Please note that you have already taken this exam</p>
-                        <a href="{{ route('student-logout') }}" class="btn btn-primary">Logout</a>
-                    </div>
+                            <p class="card-text">Please note that you have already taken this exam</p>
+                            <a href="{{ route('student-logout') }}" class="btn btn-primary">Logout</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <!-- /.col-md-6 -->
@@ -88,64 +94,5 @@
         setInterval(time, 1000);
     </script>
 
-    <script>
-        const student = {{ Js::from(Auth::user())}}
-
-        // check if exam exist for student
-        fetch("/api/get_exam_papers_by_class_timerange", {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                classes_id: student.student.classes_id
-            })
-        }).
-        then(response => response.json()).
-        then(res => {
-            let exam_paper = res[0]
-            let exam_paper_not_exist = (exam_paper == null)
-
-            // console.log("exam_paper", exam_paper)
-
-            if(exam_paper_not_exist){
-                document.getElementById("exam-paper-not-exist").style.display = "block"
-                document.getElementById("loading").style.display = "none"
-            }else{
-                // check if student has already taken exam
-                fetch("/api/query_results_table", {
-                    method: "POST",
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        classes_id: student.student.classes_id,
-                        student_id: student.student.id,
-                        subject_id: exam_paper.subject_id,
-                        exam_paper_id: exam_paper.id
-                    })
-                }).
-                then(response => response.json()).
-                then(res => {
-                    let result = res[0]
-                    let result_not_exist = (result == null)
-
-                    if(result_not_exist){
-                        document.getElementById("exam-paper-exist").style.display = "block"
-                        document.getElementById("instruction").innerText = exam_paper.instruction
-                        document.getElementById("loading").style.display = "none"
-                        document.getElementById("classes_id").value= student.student.classes_id
-                    }else{
-                        document.getElementById("result-exist").style.display = "block"
-                        document.getElementById("loading").style.display = "none"
-                    }
-
-                })
-
-
-            }
-        })
-
-        // console.log(user)
-    </script>
+   
 @endsection

@@ -84,7 +84,7 @@
               <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-              <a href="{{ route('dashboard') }}" class="nav-link">Home</a>
+              <a href="{{ URL::to('admin/dashboard') }}" class="nav-link">Home</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
@@ -119,7 +119,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                  <a href="{{ route('dashboard') }}" class="nav-link active">
+                  <a href="{{ URL::to('admin/dashboard') }}" class="nav-link active">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                       Dashboard
@@ -434,7 +434,7 @@
     <script>
         var js = document.createElement("script");
         js.type = "text/javascript";
-        js.src = "/typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image";
+        js.src = "{{URL::to('typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image')}}";
         document.head.appendChild(js);
 
         var Toast = Swal.mixin({
@@ -470,7 +470,7 @@
           $('.modal').css('opacity', 0)
           document.getElementById('ajax-loader').style.display = 'block'
 
-          fetch("/api/"+noun+"s/" + updateID, {
+          fetch("{{ URL::to('') }}/api/"+noun+"s/" + updateID, {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'
@@ -522,7 +522,7 @@
           $('.modal').css('opacity', 0)
           document.getElementById('ajax-loader').style.display = 'block'
 
-          fetch("/api/"+noun+"s/" + id, {
+          fetch("{{URL::to('')}}"+"/api/"+noun+"s/" + id, {
               method: "DELETE",
               headers: {
                   'Content-type': 'application/json'
@@ -532,7 +532,7 @@
           then(res => {
               document.getElementById("closedelete" + id + noun).click() 
               document.getElementById(noun + id + area).style.display = "none"
-              // console.log(res.message)
+              console.log(res.data)
               successAlert("<h5>"+ res.message +"</h5>")
               document.getElementById('ajax-loader').style.display = 'none'
               $('.modal').css('opacity', 1)
@@ -548,7 +548,7 @@
                 $('#custom-tabs-five-normal2').css('opacity', 0)
                 document.getElementById('ajax-loader2').style.display = 'block'
 
-                fetch("/api/"+noun+"s/", {
+                fetch("{{URL::to('')}}"+"/api/"+noun+"s", {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json'
@@ -559,32 +559,10 @@
                 then(res => {
                   console.log(res)
                     let params = ""
-
-                    res.data.forEach((nounObject, index) => {
-                        params = "?id=" + nounObject.id + "& noun= " + noun + "& key= " + key
-
-
-                        fetch(componentUrl + params, {
-                            method: "GET",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        }).then(comRes => comRes.text()).then(component => {
-                            document.getElementById(noun+"-table-body").innerHTML += component
-                            // console.log(component)
-                            com.wiris.js.JsPluginViewer.parseDocument();
-
-                            successAlert("<h5>"+ res.message +"</h5>")
-                            
-                            $("#text"+ (index + 1) +"add"+noun).val('')
-                            // $("#summernote"+ (index + 1) +"add"+noun).summernote('code', '')
-                            // tinymce.get("summernote"+ (index + 1) +"add"+noun).setContent('')
-                            tinymce.activeEditor.setContent('')
-
-                            $('#custom-tabs-five-normal2').css('opacity', 1)
-                            document.getElementById('ajax-loader2').style.display = 'none'
-                        })
-                    })
+                    successAlert("<h5>"+ res.message +"</h5>")
+                      
+                    location.reload()
+                    
                     
                     data = []
                 })
@@ -593,7 +571,7 @@
             }
         }
 
-        function loopTextFieldsToData(noun, key){
+        function loopTextFieldsToData(noun, key, data){
             for (let i = 1; i <= 5; i++) {
               let field = $("#text"+ i +"add"+ noun).val()
 
@@ -603,6 +581,8 @@
                   data.push(temp_obj)
               }
           }
+
+          return data
         }
     </script>
 
@@ -649,7 +629,7 @@
           document.getElementById('ajax-loader').style.display = 'block'
 
           if(noun == 'admin'){
-            fetch("/api/user/update/" + {{Auth::user()->id}}, {
+            fetch("{{URL::to('')}}"+"/api/user/update/" + {{Auth::user()->id}}, {
               method: "PUT",
               headers: {
                   'Content-type': 'application/json'
@@ -665,7 +645,7 @@
               $('.modal').css('opacity', 1)
             })
           }else{
-            fetch("/api/user/update/" + {{Auth::user()->id}}, {
+            fetch("{{URL::to('')}}"+"/api/user/update/" + {{Auth::user()->id}}, {
               method: "PUT",
               headers: {
                   'Content-type': 'application/json'
@@ -674,7 +654,7 @@
             }).
             then(response => response.json()).
             then(res => {
-              fetch("/api/"+ noun +"s/" + res.data.id, {
+              fetch("{{URL::to('')}}"+"/api/"+ noun +"s/" + res.data.id, {
                 method: "PUT",
                 headers: {
                   'Content-type': 'application/json'

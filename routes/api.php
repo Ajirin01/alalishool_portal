@@ -15,7 +15,7 @@ Route::group(['prefix'=> 'user', 'middleware'=> 'auth:sanctum'], function(){
 
 // Users registration, login and update route
 Route::group(['prefix'=> 'user'], function(){
-    Route::post('register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
+    Route::post('register', [\App\Http\Controllers\Api\AuthController::class, 'register'])->name('register-user');
 
     Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 
@@ -28,7 +28,7 @@ Route::post('query_classes_table', [App\Http\Controllers\Api\ClassesController::
 
 // exam routes
 Route::apiResource('exams', App\Http\Controllers\Api\ExamController::class);
-Route::post('query_questions_table', [App\Http\Controllers\Api\ExamController::class, 'queryExamTable']);
+Route::post('query_exams_table', [App\Http\Controllers\Api\ExamController::class, 'queryExamTable']);
 
 // exam paper routes
 Route::apiResource('exam_papers', App\Http\Controllers\Api\ExamPaperController::class);
@@ -38,6 +38,7 @@ Route::post('get_exam_papers_by_class_timerange', [App\Http\Controllers\Api\Exam
 // questions routes
 Route::apiResource('questions', App\Http\Controllers\Api\QuestionController::class);
 Route::post('query_questions_table', [App\Http\Controllers\Api\QuestionController::class, 'queryQuestionTable']);
+Route::post('questions/import', [App\Http\Controllers\Api\QuestionController::class, 'importQuestions']);
 
 // question answers routes
 Route::apiResource('question_answers', App\Http\Controllers\Api\QuestionAnswerController::class);
@@ -66,6 +67,7 @@ Route::post('query_teacher_subjects_table', [App\Http\Controllers\Api\TeacherCla
 // students routes
 Route::apiResource('students', App\Http\Controllers\Api\StudentController::class);
 Route::post('query_students_table', [App\Http\Controllers\Api\StudentController::class, 'queryStudentTable']);
+Route::post('students/promote', [App\Http\Controllers\Api\StudentController::class, 'promoteStudents']);
 
 // years routes
 Route::apiResource('years', App\Http\Controllers\Api\YearController::class);

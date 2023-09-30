@@ -69,10 +69,10 @@ Route::group(['prefix'=> 'student'], function(){
     Route::get('/logout', [\App\Http\Controllers\Student\AuthController::class, 'logout'])->name('student-logout')->middleware('student');
     Route::get('/welcome', [\App\Http\Controllers\Student\AuthController::class, 'welcome'])->name('student-welcome')->middleware('student');
     
-    Route::post('/exam', function(Illuminate\Http\Request $request){
-        // return response()->json($request->all());
-        return view('student.exam');
-    })->name('student-exam')->middleware('student');
+    Route::get('/exam', [\App\Http\Controllers\Student\ExamController::class, 'exam_view'])->middleware('student');
+
+    Route::post('/set-exam', [\App\Http\Controllers\Student\ExamController::class, 'set_exam'])->name('set-exam')->middleware('student');
+    Route::post('/submit-exam', [\App\Http\Controllers\Student\ExamController::class, 'submit_exam'])->name('submit-exam')->middleware('student');
 
 });
 

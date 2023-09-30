@@ -12,31 +12,32 @@ use App\Models\Year;
 use App\Models\Teacher;
 use App\Models\Classes;
 use App\Models\Subject;
+use App\Models\Exam;
+use App\Models\ExamPaper;
 
 
 class QuestionController extends Controller
 {
     public function index(Request $request){
+        $exam_paper =  ExamPaper::find($request->exam_paper_id);
+
         if (empty($request->all())) {
             return redirect(route('manage-questions-options'));
         }
         $questions = Question::where($request->except('_token', 'year_id'))->get();
+
         return view('admin.questions.index', ['questions'=> $questions,
-                    'options'=> $request->except('_token', 'year_id')]);
+                    'options'=> ['exam_id'=> $request->exam_id, 
+                    'exam_paper_id'=> $request->exam_paper_id,
+                    'classes_id'=> $exam_paper->classes_id,
+                    'subject_id'=> $exam_paper->subject_id
+                    ]
+                ]);
     }
 
     public function selectOptions(){
-        if(Auth::user()->role == "teacher"){
-            $teacher = Teacher::with('teacher_classes', 'teacher_subjects')->where('id', Auth::user()->teacher->id)->first();
-            $classes = $teacher->teacher_classes;
-            $subjects = $teacher->teacher_subjects;
-        }else{
-            $classes = Classes::all();
-            $subjects = Subject::all();
-        }
-        
-        $years = Year::all();
+        $exams = Exam::all();
 
-        return view('admin.questions.options', ['classes'=> $classes, 'subjects'=> $subjects, 'years'=> $years]);
+        return view('admin.questions.options', ['exams'=> $exams]);
     }
 }

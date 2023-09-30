@@ -16,14 +16,15 @@ class Student extends Model
     ];
 
     protected $with = [
-        'results'
+        'results',
+        'user'
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         // 'classes_id',
-        'user_id'
+        // 'user_id'
 
     ];
 

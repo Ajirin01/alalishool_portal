@@ -22,11 +22,16 @@ class QuestionAnswer extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'question_id'
+        'question_id',
+        // 'correct'
     ];
 
     public function question(){
         return $this->belongsTo('App\Models\Question');
+    }
+
+    public function answers(){
+        return $this->getConnection()->makeHidden('correct');
     }
     
 }

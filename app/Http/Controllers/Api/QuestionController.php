@@ -13,7 +13,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> Question::with('exam', 'exam_paper', 'classes', 'subject')->get()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Question::paginate(50)], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)
@@ -27,7 +27,7 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        return response()->json(['message'=> 'success', 'data'=> Question::with('exam', 'exam_paper', 'classes', 'subject')->where('id',$id)->first()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Question::find($id)], status:Response::HTTP_OK);
     }
     
     public function update(Request $request, $id)
@@ -54,5 +54,25 @@ class QuestionController extends Controller
     public function queryQuestionTable(Request $request)
     {
         return response()->json(Question::where($request->all())->get());
+    }
+
+    public function importQuestions(Request $request)
+    {
+        $created_questions = [];
+        
+        $questions = $request->questions;
+
+        foreach ($questions as $index => $question) {
+            $created_question = Question::create($question);
+            $answers = $question['answers'];
+            foreach($answers as $answer){
+                $answer['question_id'] = $created_question->id;
+
+                QuestionAnswer::create($answer);
+            }
+            
+            array_push($created_questions, $created_question);
+        }
+        return response()->json(['message'=> 'Import successfully completed!', 'data'=> $created_questions], status:Response::HTTP_CREATED);
     }
 }

@@ -5,7 +5,6 @@
             {{-- add exam component --}}
             <div style="display: none; text-align: center" class="overlay dark" id="ajax-loader2"><i style="position: fixed; margin-top: 20vh" class="fas fa-3x fa-sync-alt fa-spin"></i></div>
 
-
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
@@ -28,7 +27,7 @@
                                         <li>
                                             <ul>
                                                 <li class="correct-box" id="correct-box"></li>
-                                                <li> <b> Percentage Correct Answers </b> ===> <b id="correct-percent-area"></b> </li>
+                                            <li> <b> Percentage Correct Answers </b> ===> <b id="correct-percent-area"></b> </li>
                                             </ul>
                                         </li> <br>
                             
@@ -90,16 +89,30 @@
             </div>
             <!-- /.content -->
 
+            <form action="{{URL::to('student/submit-exam')}}" method="post" id="exam-form">
+                @csrf
+                <input type="hidden" name="student_id" value="{{Auth::user()->student->id}}">
+                <input type="hidden" name="answered_questions" id="answered_questions">
+                <input type="hidden" name="exam_id" id="exam_id" value="{{$exam_paper->exam->id}}">
+                <input type="hidden" name="subject_id" id="subject_id" value="{{$exam_paper->subject->id}}">
+                <input type="hidden" name="year_id" id="year_id" value="{{$exam_paper->exam->year->id}}">
+                <input type="hidden" name="term_id" id="term_id" value="{{$exam_paper->exam->term->id}}">
+                <input type="hidden" name="exam_paper_id" id="exam_paper_id" value="{{$exam_paper->id}}">
+            </form>
+
         </div>
     </div>
     
 
-    <script type="text/javascript" src="{{ asset('typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image') }}"></script>
+    <script type="text/javascript" src="{{ URL::to('typemath/tinymce6/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image') }}"></script>
 
     <script src="{{ asset('adminlte/paginator.js') }}"></script>
     <script src="{{ asset('adminlte/query-object.js') }}"></script>
     <script>
         const student = {{ Js::from(Auth::user()->student) }}
+        const URL = "{{URL::to('')}}"
+
+        // console.log(sessionStorage.getItem('questions'))
     </script>
     <script src="{{ asset('adminlte/exam-handler.js') }}"></script>
 @endsection
