@@ -95,7 +95,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         border-radius: 3px;
         margin: 4px;
         box-shadow: rgb(74, 74, 75) -3px 2px 10px;
-        width: 30px;
+        width: 40px;
         text-align: center;
         text-decoration: none;
         font-size: 1.3rem;
@@ -109,7 +109,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         border-radius: 3px;
         margin: 4px;
         box-shadow: rgb(74, 74, 75) -3px 2px 10px;
-        width: 30px;
+        width: 40px;
         text-align: center;
         color: rgb(15, 13, 13);
         text-decoration: none;
@@ -125,7 +125,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         border-radius: 3px;
         margin: 4px;
         box-shadow: rgba(74, 74, 75, 0.712) -3px 2px 10px;
-        width: 30px;
+        width: 40px;
         text-align: center;
         color:rgb(173, 171, 171);
         text-decoration: none;
@@ -183,8 +183,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
         background-color: rgb(9, 5, 46);
         padding: 10px 5px;
         border-radius: 5px;
-        display: none;
+        /* display: none; */
         text-align: center
+    }
+
+    .answer-content{
+       /* margin-top: -3px;  */
+       padding-left: 20px
+    }
+
+    .answer-item{
+        display: flex; 
+        flex-direction: row; 
+        justify-content: flex-start"
     }
   </style>
 </head>
@@ -231,25 +242,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </div>
 
-            <div class="mt-3 pb-3 mb-3 d-flex">
-                <div class="info">
-                    <a href="#" class="d-block pl-3"><b>Exam year:</b> <span id="exam-year"></span></a>
+            @if ($exam_paper !== null)
+                <div class="mt-3 pb-3 mb-3 d-flex">
+                    <div class="info">
+                        <a href="#" class="d-block pl-3"><b>Exam year:</b> <span id="exam-year">{{$exam_paper->exam->year->year}}</span></a>
+                    </div>
+
+                    <div class="info">
+                        <a href="#" class="d-block pl-3"><b>Subject:</b> <span id="exam-subject">{{$exam_paper->subject->name}}</span></a>
+                    </div>
                 </div>
 
-                <div class="info">
-                    <a href="#" class="d-block pl-3"><b>Subject:</b> <span id="exam-subject"></span></a>
-                </div>
-            </div>
+                <div class="mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px gray solid">
+                    <div class="info">
+                        <a href="#" class="d-block pl-3"><b>Term:</b> <span id="exam-term">{{$exam_paper->exam->term->name}}</span></a>
+                    </div>
 
-            <div class="mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px gray solid">
-                <div class="info">
-                    <a href="#" class="d-block pl-3"><b>Term:</b> <span id="exam-term"></span></a>
+                    <div class="info">
+                        <a href="#" class="d-block pl-3"><b>Exam duration:</b> <span id="exam-duration">{{$exam_paper->duration}}</span></a>
+                    </div>
                 </div>
+            @endif
 
-                <div class="info">
-                    <a href="#" class="d-block pl-3"><b>Exam duration:</b> <span id="exam-duration"></span></a>
-                </div>
-            </div>
+            
         
             <ul id="pager"></ul>
         
@@ -289,7 +304,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     // console.log(user)
 
     // get student's class
-    fetch("/api/query_classes_table", {
+    fetch("{{URL::to('')}}"+"/api/query_classes_table", {
         method: "POST",
         headers: {
             'Content-type': 'application/json'

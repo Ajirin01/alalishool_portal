@@ -32,7 +32,7 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">Students result by Year, Term, Class, Subject, Exam and Exam Paper</h3>
+                                        <h3 class="card-title">Students result for: {{strtoupper($exam_paper->name)}}</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -42,7 +42,7 @@
                                                     <th>S/N</th>
                                                     <th>Student</th>
                                                     <th>Over</th>
-                                                    @if (Auth::user()->role == "admin")
+                                                    @if (Auth::user()->role == "admin" || Auth::user()->role == "teacher")
                                                         <th>Score</th>
                                                         <th>Actions</th>
                                                     @endif
@@ -57,7 +57,7 @@
                                                         </td>
                                                         <td>{{$result->over}}</td>
                                                         
-                                                        @if (Auth::user()->role == "admin")
+                                                        @if (Auth::user()->role == "admin" || Auth::user()->role == "teacher")
                                                             <x-general.noun-area :id="$result->id" :name="$result->score" :noun="'result'"/>
                                                         @endif
                                                     </tr>
@@ -68,7 +68,7 @@
                                                     <th>S/N</th>
                                                     <th>Student</th>
                                                     <th>Over</th>
-                                                    @if (Auth::user()->role == "admin")
+                                                    @if (Auth::user()->role == "admin" || Auth::user()->role == "teacher")
                                                         <th>Score</th>
                                                         <th>Actions</th>
                                                     @endif

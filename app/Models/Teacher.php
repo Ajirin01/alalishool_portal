@@ -20,10 +20,10 @@ class Teacher extends Model
         'user_id'
     ];
 
-    protected $with = [
-        'teacher_classes',
-        'teacher_subjects'
-    ];
+    // protected $with = [
+    //     'teacher_classes',
+    //     'teacher_subjects'
+    // ];
 
     public function user(){
         return $this->belongsTo('App\Models\User');

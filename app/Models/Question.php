@@ -54,4 +54,10 @@ class Question extends Model
         return $this->belongsTo('App\Models\Subject');
     }
 
+    public function question_answers_no_correct()
+    {
+        // $questionAnswers = $this->hasMany('App\Models\QuestionAnswer')->getRelated();
+        return $this->hasMany('App\Models\QuestionAnswer')->select(['id', 'question_id', 'answer'])->without(['correct']);
+    }
+
 }

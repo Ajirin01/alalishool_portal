@@ -12,7 +12,8 @@ class ExamController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> Exam::with('year', 'term')->get()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Exam::paginate(20)], status:Response::HTTP_OK);
+        // return response()->json(['message'=> 'success', 'data'=> Exam::with('year', 'term')->get()], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)
@@ -22,7 +23,7 @@ class ExamController extends Controller
 
     public function show($id)
     {
-        return response()->json(['message'=> 'success', 'data'=> Exam::with('year', 'term')->where('id',$id)->first()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Exam::find($id)], status:Response::HTTP_OK);
     }
     
     public function update(Request $request, $id)
@@ -47,7 +48,7 @@ class ExamController extends Controller
 
     public function queryExamTable(Request $request)
     {
-        return response()->json(Exam::where($request->all())->get());
+        return response()->json(Exam::where($request->all())->inRandomOrder()->get());
     }
     
 }

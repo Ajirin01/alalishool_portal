@@ -38,10 +38,10 @@ class User extends Authenticatable
         'updated_at'
     ];
 
-    protected $with = [
-        'teacher',
-        'student'
-    ];
+    // protected $with = [
+    //     'teacher',
+    //     'student'
+    // ];
 
     /**
      * The attributes that should be cast.

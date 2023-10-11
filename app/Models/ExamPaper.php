@@ -20,10 +20,10 @@ class ExamPaper extends Model
         'status'
     ];
 
-    protected $with = [
-        'questions',
-        'results'
-    ];
+    // protected $with = [
+    //     'questions',
+    //     'results'
+    // ];
 
     protected $hidden = [
         'created_at',

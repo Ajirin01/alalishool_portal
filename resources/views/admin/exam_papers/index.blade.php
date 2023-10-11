@@ -141,7 +141,7 @@
                 $('#custom-tabs-five-normal2').css('opacity', 0)
                 document.getElementById('ajax-loader2').style.display = 'block'
 
-                fetch("/api/exam_papers/", {
+                fetch("{{URL::to('')}}"+"/api/exam_papers", {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json'
@@ -150,32 +150,8 @@
                 }).
                 then(response => response.json()).
                 then(res => {
-                    let params = ""
-                    let componentUrl = ""
-
-                    componentUrl = "/components/exam-paper-table-body-row"
-                    params = "?id=" + res.data.id + "& noun= " + noun
-
-                    fetch(componentUrl + params, {
-                        method: "GET",
-                        headers: {
-                            'Content-type': 'application/json'
-                        }
-                    }).then(comRes => comRes.text()).then(component => {
-                        document.getElementById(noun+"-table-body").innerHTML += component
-                        // console.log(component)
-
-                        successAlert("<h5>"+ res.message +"</h5>")
-                        
-                        $("#name-add").val('')
-                        $("#duration-add").val('')
-                        $("#start-time-add").val('')
-                        $("#status-add").val('')
-
-
-                        $('#custom-tabs-five-normal2').css('opacity', 1)
-                        document.getElementById('ajax-loader2').style.display = 'none'
-                    })
+                    successAlert("<h5>"+ res.message +"</h5>")
+                    location.reload()
                 })
                     
                 data = []
@@ -207,7 +183,7 @@
             $('.modal').css('opacity', 0)
             document.getElementById('ajax-loader').style.display = 'block'
 
-            fetch("/api/exam_papers/" + id, {
+            fetch("{{URL::to('')}}"+"/api/exam_papers/" + id, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json'
@@ -216,16 +192,10 @@
             }).
             then(response => response.json()).
             then(res => {
-                document.getElementById("examPaperTitle" + id + "output").innerHTML =   res.data.name
-                document.getElementById("examPaperDuration" + id + "output").innerHTML =   res.data.duration
-                document.getElementById("examPaperStartTime" + id + "output").innerHTML =   res.data.start_time
-                document.getElementById("examPaperStatus" + id + "output").innerHTML =   res.data.status
-
-                document.getElementById("closeupdate" + id + "exam-paper").click() 
-                // console.log(res.message)
                 successAlert("<h5>"+ res.message +"</h5>")
-                document.getElementById('ajax-loader').style.display = 'none'
-                $('.modal').css('opacity', 1)
+                setTimeout(() => {
+                    location.reload()
+                }, 500);
             })
         }
     </script>

@@ -13,7 +13,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> Question::with('exam', 'exam_paper', 'classes', 'subject')->get()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Question::paginate(50)], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)
@@ -27,7 +27,7 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        return response()->json(['message'=> 'success', 'data'=> Question::with('exam', 'exam_paper', 'classes', 'subject')->where('id',$id)->first()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Question::find($id)], status:Response::HTTP_OK);
     }
     
     public function update(Request $request, $id)

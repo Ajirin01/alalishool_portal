@@ -101,7 +101,7 @@
         $('.modal').css('opacity', 0)
         document.getElementById('ajax-loader').style.display = 'block'
 
-        fetch("/api/teacher_subjects/", {
+        fetch("{{URL::to('')}}"+"/api/teacher_subjects", {
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
@@ -114,7 +114,7 @@
             console.log(res)
 
             res.data.forEach((teacherSubject, index) => {
-                component_url = "/components/teacher-subjects-area"
+                component_url = "{{URL::to('')}}"+"/components/teacher-subjects-area"
                 params = "?id=" + teacher_id + "& name= " + teacherSubject.subject_name
 
 

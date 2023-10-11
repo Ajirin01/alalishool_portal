@@ -142,20 +142,23 @@
                 $('#custom-tabs-five-normal2').css('opacity', 0)
                 document.getElementById('ajax-loader2').style.display = 'block'
 
-                fetch("/api/user/register/", {
+                // fetch("../api/user/register/", {
+                fetch("{{URL::to('api/user/register')}}", {
                     method: "POST",
                     headers: {
-                        'Content-type': 'application/json'
+                        'Content-type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify(data)
                 }).
                 then(user_response => user_response.json()).
                 then(user_res => {
                     console.log(user_res.data[0])
-                    fetch("/api/"+noun+"s/", {
+                    fetch("{{URL::to('')}}"+"/api/"+noun+"s", {
                         method: "POST",
                         headers: {
-                            'Content-type': 'application/json'
+                            'Content-type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
                         },
                         body: JSON.stringify({
                             user_id: user_res.data[0].id,
@@ -164,17 +167,18 @@
                     }).
                     then(teacher_response => teacher_response.json()).
                     then(teacher_res => {
-                        
+                        console.log(teacher_res)
                         let params = ""
                         let componentUrl = ""
 
-                        componentUrl = "/components/teacher-table-body-row"
+                        componentUrl = "{{URL::to('')}}"+"/components/teacher-table-body-row"
                         params = "?id=" + teacher_res.data.id + "& noun= " + noun
 
                         fetch(componentUrl + params, {
                             method: "GET",
                             headers: {
-                                'Content-type': 'application/json'
+                                'Content-type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
                             }
                         }).then(comRes => comRes.text()).then(component => {
                             document.getElementById(noun+"-table-body").innerHTML += component
@@ -220,7 +224,7 @@
             $('.modal').css('opacity', 0)
             document.getElementById('ajax-loader').style.display = 'block'
 
-            fetch("/api/teachers/" + id, {
+            fetch("{{URL::to('')}}"+"/api/teachers/" + id, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json'
@@ -230,7 +234,7 @@
             then(teacher_response => teacher_response.json()).
             then(teacher_res => {
                 console.log(teacher_res)
-                fetch("/api/user/update/" + teacher_res.data.user.id, {
+                fetch("{{URL::to('')}}"+"/api/user/update/" + teacher_res.data.user.id, {
                     method: "PUT",
                     headers: {
                         'Content-type': 'application/json'

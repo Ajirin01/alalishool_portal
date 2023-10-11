@@ -13,10 +13,10 @@ class Year extends Model
         'year'
     ];
 
-    protected $with = [
-        'exams',
-        'results'
-    ];
+    // protected $with = [
+    //     'exams',
+    //     'results'
+    // ];
 
     protected $hidden = [
         'created_at',

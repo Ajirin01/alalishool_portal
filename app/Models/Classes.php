@@ -11,12 +11,12 @@ class Classes extends Model
 
     protected $fillable = ['name'];
 
-    protected $with = [
-        'students.user',
-        'students',
-        'teacher_classes',
-        'results'
-    ];
+    // protected $with = [
+    //     'students.user',
+    //     'students',
+    //     'teacher_classes',
+    //     'results'
+    // ];
 
     protected $touch = [
         'teacher_classes'

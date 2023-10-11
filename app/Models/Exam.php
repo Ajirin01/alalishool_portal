@@ -19,9 +19,9 @@ class Exam extends Model
         'status'
     ];
 
-    protected $with = [
-        'exam_papers'
-    ];
+    // protected $with = [
+    //     'exam_papers'
+    // ];
 
     protected $touch = [
         'year'

@@ -14,6 +14,8 @@ use App\Models\Subject;
 use App\Models\Student;
 use App\Models\Classes;
 use App\Models\Teacher;
+use App\Models\Exam;
+use App\Models\ExamPaper;
 
 
 class ResultController extends Controller
@@ -22,24 +24,17 @@ class ResultController extends Controller
         if (empty($request->all())) {
             return redirect(route('manage-results-options'));
         }
-        $results = Result::with('subject', 'exam', 'exam_paper', 'student', 'term')->where($request->except('_token'))->get();
+
+        $results = Result::where($request->except('_token'))->get();
+
+        $exam_pape = ExamPaper::find($request->exam_paper_id);
         return view('admin.results.index', ['results'=> $results,
-                    'options'=> $request->except('_token')]);
+                    'options'=> $request->except('_token'), 'exam_paper'=> $exam_pape]);
     }
 
     public function selectOptions(){
-        $terms = Term::all();
-        $years = Year::all();
+        $exams = Exam::all();
 
-        if(Auth::user()->role == "teacher"){
-            $teacher = Teacher::with('teacher_classes', 'teacher_subjects')->where('user_id', Auth::user()->id)->first();
-            $classes = $teacher->teacher_classes;
-            $subjects = $teacher->teacher_subjects;
-        }else if(Auth::user()->role == "admin"){
-            $classes = Classes::all();
-            $subjects = Subject::all();
-        }
-
-        return view('admin.results.options', ['terms'=> $terms, 'years'=> $years, 'subjects'=> $subjects, 'classes'=> $classes]);
+        return view('admin.results.options', ['exams'=> $exams]);
     }
 }

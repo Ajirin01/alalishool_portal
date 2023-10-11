@@ -13,7 +13,9 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return response()->json(['message'=> 'success', 'data'=> Student::with('user', 'classes')->get()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Student::all()], status:Response::HTTP_OK);
+        
+        // return response()->json(['message'=> 'success', 'data'=> Student::with('user', 'classes')->get()], status:Response::HTTP_OK);
     }
 
     public function store(Request $request)
@@ -25,7 +27,8 @@ class StudentController extends Controller
     public function show($id)
     {
         // return response()->json(['message'=> 'success', 'data'=> Student::with('user')->where('id', $id)->first()], status:Response::HTTP_OK);
-        return response()->json(['message'=> 'success', 'data'=> Student::with('user', 'classes')->where('id',$id)->first()], status:Response::HTTP_OK);
+        return response()->json(['message'=> 'success', 'data'=> Student::find($id)->first()], status:Response::HTTP_OK);
+        // return response()->json(['message'=> 'success', 'data'=> Student::with('user', 'classes')->where('id',$id)->first()], status:Response::HTTP_OK);
     }
     
     public function update(Request $request, $id)

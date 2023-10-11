@@ -18,10 +18,10 @@ class Term extends Model
         'updated_at'
     ];
 
-    protected $with = [
-        'exams',
-        'results'
-    ];
+    // protected $with = [
+    //     'exams',
+    //     'results'
+    // ];
 
     public function exams(){
         return $this->hasMany('App\Models\Exam');

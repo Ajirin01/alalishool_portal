@@ -29,6 +29,10 @@
                                         <table id="example1" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
+                                                    <!-- Add this within the thead -->
+                                                    <th>
+                                                        <input type="checkbox" id="select-all">
+                                                    </th>
                                                     <th>S/N</th>
                                                     <th>Name</th>
                                                     <th>Admission Number</th>
@@ -40,12 +44,17 @@
                                                     @php
                                                         $sn =  $i + 1 ;
                                                     @endphp
-                                                    <tr id="student{{$student->id}}row">
-                                                        <td>{{ $i + 1 }}</td>
-                                                        {{-- render student component --}}
-                                                        <x-student.student-area :id="$student->id" :name="$student->name"
-                                                        :phone="$student->user->phone" :email="$student->user->email" />
-                                                    </tr>
+                                                    @if ($student->user !== null)
+                                                        <tr id="student{{$student->id}}row">
+                                                            <td>
+                                                                <input type="checkbox" class="student-checkbox" data-student-id="{{ $student->id }}">
+                                                            </td>
+                                                            <td>{{ $i + 1 }}</td>
+                                                            {{-- render student component --}}
+                                                            <x-student.student-area :id="$student->id" :name="$student->name"
+                                                            :phone="$student->user->phone" :email="$student->user->email" />
+                                                        </tr>
+                                                    @endif
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
@@ -76,6 +85,13 @@
                     </div>
                     <!-- /.card -->
                     <input type="hidden" id="options" value="{{ json_encode($options) }}">
+                    <select name="class" id="classes_id">
+                        <option value="">Select Class</option>
+                        @foreach (App\Models\Classes::all() as $class)
+                            <option value="{{$class->id}}">{{$class->name}}</option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-primary" onclick="promotStudents()">Promote Students</button>
                 </div>
             </div>
         </div>
@@ -90,6 +106,8 @@
         var role = "student"
         var options = JSON.parse($("#options").val())
         var data = {}
+
+        // console.log(options.classes_id)
 
         function handleNameChange(){
             name = event.target.value
@@ -127,7 +145,7 @@
                 $('#custom-tabs-five-normal2').css('opacity', 0)
                 document.getElementById('ajax-loader2').style.display = 'block'
 
-                fetch("/api/user/register/", {
+                fetch("{{URL::to('')}}"+"/api/user/register", {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json'
@@ -137,7 +155,7 @@
                 then(user_response => user_response.json()).
                 then(user_res => {
                     console.log(user_res.data[0])
-                    fetch("/api/"+noun+"s/", {
+                    fetch("{{URL::to('')}}"+"/api/"+noun+"s", {
                         method: "POST",
                         headers: {
                             'Content-type': 'application/json'
@@ -151,11 +169,11 @@
                     }).
                     then(student_response => student_response.json()).
                     then(student_res => {
-                        
+                        console.log(student_res)
                         let params = ""
                         let componentUrl = ""
 
-                        componentUrl = "/components/student-table-body-row"
+                        componentUrl = "{{URL::to('')}}"+"/components/student-table-body-row"
                         params = "?id=" + student_res.data.id + "& noun= " + noun
 
                         fetch(componentUrl + params, {
@@ -207,7 +225,7 @@
             $('.modal').css('opacity', 0)
             document.getElementById('ajax-loader').style.display = 'block'
 
-            fetch("/api/students/" + id, {
+            fetch("{{URL::to('')}}"+"/api/students/" + id, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json'
@@ -217,7 +235,7 @@
             then(student_response => student_response.json()).
             then(student_res => {
                 console.log(student_res)
-                fetch("/api/user/update/" + student_res.data.user.id, {
+                fetch("{{URL::to('')}}"+"/api/user/update/" + student_res.data.user.id, {
                     method: "PUT",
                     headers: {
                         'Content-type': 'application/json'
@@ -239,4 +257,69 @@
             
         }
     </script>
+
+    <script>
+        var selectAllCheckbox = document.getElementById('select-all');
+        var studentCheckboxes = document.querySelectorAll('.student-checkbox');
+        
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select All checkbox
+           
+
+            selectAllCheckbox.addEventListener('change', function () {
+                studentCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+
+            // Individual checkboxes
+            studentCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    // Check if all individual checkboxes are checked and update the Select All checkbox
+                    selectAllCheckbox.checked = [...studentCheckboxes].every(checkbox => checkbox.checked);
+                });
+            });
+        });
+
+
+        function promotStudents() {
+            var classes_id =document.getElementById('classes_id').value
+            const selectedIds = [];
+            studentCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const studentId = checkbox.dataset.studentId;
+                    selectedIds.push(studentId);
+                }
+            });
+            
+            if(selectedIds.length === 0 || classes_id === ""){
+                errorAlert("<h5> Please make sure you select Class and Students to promote</h5>")
+            }else{
+                // Now you have an array (selectedIds) containing the IDs of the selected students
+                console.log('Selected IDs:', selectedIds);
+
+                fetch("{{URL::to('')}}"+"/api/students/promote", {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ids: selectedIds,
+                        classes_id: classes_id
+                        
+                    })
+                }).
+                then(response => response.json()).
+                then(res => {
+                    successAlert("<h5>"+ res.message +"</h5>")
+                    location.reload()
+                })
+            }
+
+            
+        }
+    </script>
+
+
 @endsection
