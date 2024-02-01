@@ -55,4 +55,24 @@ class QuestionController extends Controller
     {
         return response()->json(Question::where($request->all())->get());
     }
+
+    public function importQuestions(Request $request)
+    {
+        $created_questions = [];
+        
+        $questions = $request->questions;
+
+        foreach ($questions as $index => $question) {
+            $created_question = Question::create($question);
+            $answers = $question['answers'];
+            foreach($answers as $answer){
+                $answer['question_id'] = $created_question->id;
+
+                QuestionAnswer::create($answer);
+            }
+            
+            array_push($created_questions, $created_question);
+        }
+        return response()->json(['message'=> 'Import successfully completed!', 'data'=> $created_questions], status:Response::HTTP_CREATED);
+    }
 }

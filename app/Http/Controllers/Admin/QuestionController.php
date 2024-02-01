@@ -38,6 +38,7 @@ class QuestionController extends Controller
     public function selectOptions(){
         $exams = Exam::all();
 
+<<<<<<< HEAD
         if(Auth::user()->role == "teacher"){
             $classes_ids = [];
             $subjects_ids = [];
@@ -68,5 +69,8 @@ class QuestionController extends Controller
         }
 
         
+=======
+        return view('admin.questions.options', ['exams'=> $exams]);
+>>>>>>> a37d840ba0eb30773ff0e8b9711a87e94cb762fd
     }
 }

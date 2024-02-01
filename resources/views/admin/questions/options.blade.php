@@ -24,12 +24,20 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
+
                             <label>Class</label>
                             <select name="classes_id" id="classes-id" class="form-control select2" style="width: 100%;" onchange="loadExamPapers()" required>
                                 {{-- <option selected="selected">option comes here</option> --}}
                                 <option value="">Select Class</option>
                                 @foreach ($classes as $_class)
                                     <option value="{{$_class->id}}">{{$_class->name}}</option>
+
+                            <label>Exam</label>
+                            <select name="exam_id" id="exam-id" class="form-control select2" style="width: 100%;" onchange="loadExamPapers()" required>
+                                {{-- <option selected="selected">option comes here</option> --}}
+                                <option value="">Select Exam</option>
+                                @foreach ($exams as $exam)
+                                    <option value="{{$exam->id}}">{{$exam->title}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -66,6 +74,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label>Exam Paper</label>
                             <select name="exam_paper_id" id="exam-paper-id" class="form-control select2" style="width: 100%;" required>
                                 {{-- <option selected="selected">option comes here</option> --}}
@@ -76,10 +86,6 @@
                         <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
-
-                    
-    
-    
                     <div class="col-md-12">
                         <input type="submit" value="Manage questions" class="btn btn-primary form-control">
                     </div>
@@ -124,15 +130,22 @@
             let selected_exam = event.target.id.split('-')
             let value = selected_exam[selected_exam.length - 1]
 
+
             let classes_id = document.getElementById('classes-id').value
             let subject_id = document.getElementById('subject-id').value
 
+
+>
             fetch("{{ URL::to('') }}/api/query_exam_papers_table", {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json'
                 },
+
                 body: JSON.stringify({exam_id: value, classes_id, subject_id})
+
+                body: JSON.stringify({exam_id: value})
+>
             }).
             then(response => response.json()).
             then(exam_papers =>{
