@@ -11,6 +11,6 @@ class TermController extends Controller
 {
     public function index(){
         $terms = Term::all();
-        return view("admin.terms.index", ['terms'=> $terms, 'noun'=> 'term']);
+        return view("portal.terms.index", ['terms'=> $terms, 'noun'=> 'term']);
     }
 }

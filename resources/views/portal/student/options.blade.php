@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('admin-content')
+@section('portal-content')
     
      <!-- SELECT2 EXAMPLE -->
     <div class="card card-default">

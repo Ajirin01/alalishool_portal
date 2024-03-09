@@ -17,7 +17,7 @@ class ExamPaperController extends Controller
             return redirect(route('manage-exam-papers-options'));
         }
         $exam_papers = ExamPaper::where($request->except('_token'))->get();
-        return view('admin.exam_papers.index', ['exam_papers'=> $exam_papers,
+        return view('portal.exam_papers.index', ['exam_papers'=> $exam_papers,
                     'options'=> $request->except('_token')]);
     }
 
@@ -25,6 +25,6 @@ class ExamPaperController extends Controller
         $classes = Classes::all();
         $subjects = Subject::all();
         $exams = Exam::all();
-        return view('admin.exam_papers.options', ['classes'=> $classes, 'subjects'=> $subjects, 'exams'=> $exams]);
+        return view('portal.exam_papers.options', ['classes'=> $classes, 'subjects'=> $subjects, 'exams'=> $exams]);
     }
 }

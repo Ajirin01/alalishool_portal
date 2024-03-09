@@ -11,6 +11,6 @@ class SubjectController extends Controller
 {
     public function index(){
         $subjects = Subject::all();
-        return view("admin.subjects.index", ['subjects'=> $subjects, 'noun'=> 'subject']);
+        return view("portal.subjects.index", ['subjects'=> $subjects, 'noun'=> 'subject']);
     }
 }

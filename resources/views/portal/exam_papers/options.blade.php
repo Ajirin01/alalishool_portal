@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('admin-content')
+@section('portal-content')
     
      <!-- SELECT2 EXAMPLE -->
     <div class="card card-default">
@@ -18,18 +18,18 @@
         </div>
         <!-- /.card-header -->
 
-        <form action="{{ route('manage-exams') }}" method="get">
+        <form action="{{ route('manage-exam-papers') }}" method="get">
             @csrf
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Year</label>
-                            <select name="year_id" id="year-id" class="form-control select2" style="width: 100%;" required>
+                            <label>Class</label>
+                            <select name="classes_id" id="class-id" class="form-control select2" style="width: 100%;" required>
                                 {{-- <option selected="selected">option comes here</option> --}}
-                                <option value="">Select Year</option>
-                                @foreach ($years as $year)
-                                    <option value="{{ $year->id }}">{{ $year->year }}</option>
+                                <option value="">Select Class</option>
+                                @foreach ($classes as $class)
+                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -39,12 +39,27 @@
     
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Term</label>
-                            <select name="term_id" id="term-id" class="form-control select2" style="width: 100%;" required>
+                            <label>Subject</label>
+                            <select name="subject_id" id="subject-id" class="form-control select2" style="width: 100%;" required>
                                 {{-- <option selected="selected">option comes here</option> --}}
-                                <option value="">Select Term</option>
-                                @foreach ($terms as $term)
-                                    <option value="{{ $term->id }}"> {{ $term->name  }} </option>
+                                <option value="">Select Subject</option>
+                                @foreach ($subjects as $subject)
+                                    <option value="{{ $subject->id }}"> {{ $subject->name  }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Exam</label>
+                            <select name="exam_id" id="subject-id" class="form-control select2" style="width: 100%;" required>
+                                {{-- <option selected="selected">option comes here</option> --}}
+                                <option value="">Select Exam</option>
+                                @foreach ($exams as $exam)
+                                    <option value="{{ $exam->id }}"> {{ $exam->title  }} ({{ $exam->descripton }}) </option>
                                 @endforeach
                             </select>
                         </div>

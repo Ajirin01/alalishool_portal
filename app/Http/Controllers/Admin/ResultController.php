@@ -28,13 +28,13 @@ class ResultController extends Controller
         $results = Result::where($request->except('_token'))->get();
 
         $exam_pape = ExamPaper::find($request->exam_paper_id);
-        return view('admin.results.index', ['results'=> $results,
+        return view('portal.results.index', ['results'=> $results,
                     'options'=> $request->except('_token'), 'exam_paper'=> $exam_pape]);
     }
 
     public function selectOptions(){
         $exams = Exam::all();
 
-        return view('admin.results.options', ['exams'=> $exams]);
+        return view('portal.results.options', ['exams'=> $exams]);
     }
 }

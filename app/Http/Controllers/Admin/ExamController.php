@@ -16,13 +16,13 @@ class ExamController extends Controller
             return redirect(route('manage-exams-options'));
         }
         $exams = Exam::where($request->except('_token'))->get();
-        return view('admin.exams.index', ['exams'=> $exams,
+        return view('portal.exams.index', ['exams'=> $exams,
                     'options'=> $request->except('_token')]);
     }
 
     public function selectOptions(){
         $years = Year::all();
         $terms = Term::all();
-        return view('admin.exams.options', ['years'=> $years, 'terms'=> $terms]);
+        return view('portal.exams.options', ['years'=> $years, 'terms'=> $terms]);
     }
 }

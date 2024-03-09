@@ -5,10 +5,11 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
+            {{-- {{json_encode($options)}} --}}
             <div class="card-body">
                 <select class="form-control" name="exam-paper" id="exam-paper">
                     <option value="">Select Exam Paper</option>
-                    @foreach (App\Models\ExamPaper::with('questions')->get() as $exam_paper)
+                    @foreach (App\Models\ExamPaper::with('questions')->where('classes_id', $options['classes_id'])->where('subject_id', $options['subject_id'])->get() as $exam_paper)
                         <option value="{{json_encode($exam_paper->questions)}}">{{$exam_paper->name}}</option>
                     @endforeach
                 </select>

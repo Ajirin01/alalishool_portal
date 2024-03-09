@@ -19,7 +19,7 @@ Route::get('/', function () {
     //     'laravelVersion' => Application::VERSION,
     //     'phpVersion' => PHP_VERSION,
     // ]);
-    return redirect(route('student-welcome'));
+    return redirect(route('portal'));
 });
 
 Route::get('/todo', function() {
@@ -43,23 +43,23 @@ require __DIR__.'/auth.php';
 // })->name('admin')->middleware('admin');
 
 // Route::get('/dashboard', function(){
-//     return view('admin.dashboard');
+//     return view('portal.dashboard');
 // })->name('dashboard')->middleware('admin');
 
-Route::group(['prefix'=> 'admin', 'middleware'=> 'admin'], function(){
+Route::group(['prefix'=> 'portal', 'middleware'=> 'admin'], function(){
     Route::get('/', function(){
-        return redirect(route('admin-dashboard'));
+        return redirect(route('portal-dashboard'));
     })->name('admin');
     
     Route::get('/dashboard', function(){
-        return view('admin.dashboard');
-    })->name('admin-dashboard');
+        return view('portal.dashboard');
+    })->name('portal');
 });
 
-Route::group(['prefix'=> 'admin'], function(){
-    Route::get('/login', [\App\Http\Controllers\Admin\AuthController::class, 'loginForm'])->name('admin-login');
-    Route::post('/login', [\App\Http\Controllers\Admin\AuthController::class, 'loginSubmit'])->name('admin-login-submit');
-    Route::get('/logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('admin-logout')->middleware('admin');
+Route::group(['prefix'=> 'portal'], function(){
+    Route::get('/login', [\App\Http\Controllers\Admin\AuthController::class, 'loginForm'])->name('portal-login');
+    Route::post('/login', [\App\Http\Controllers\Admin\AuthController::class, 'loginSubmit'])->name('portal-login-submit');
+    Route::get('/logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('portal-logout')->middleware('admin');
 });
 
 
@@ -117,7 +117,7 @@ Route::group(['prefix'=> 'manage', 'middleware'=> 'admin'], function(){
 Route::get('/report/{studentId}', function($studentId){
     $student = App\Models\Student::find($studentId);
     $results = App\Models\Result::with('subject', 'exam', 'exam_paper', 'student', 'year', 'term', 'classes')->where('student_id', $studentId)->get();
-    return view('admin.results.report', ['results'=> $results, 'student'=>$student]);
+    return view('portal.results.report', ['results'=> $results, 'student'=>$student]);
 })->name('report')->middleware('admin');
 
 Route::group(['prefix'=> 'components', 'middleware'=> 'admin'], function(){

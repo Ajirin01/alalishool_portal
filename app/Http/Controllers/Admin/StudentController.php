@@ -20,7 +20,7 @@ class StudentController extends Controller
         }
         $students = Student::where($request->except('_token'))->get();
         $classes= Classes::all();
-        return view('admin.student.index', ['students'=> $students,
+        return view('portal.student.index', ['students'=> $students,
                     'classes'=> $classes, 'class'=> Classes::find($request->classes_id),
                     'options'=> $request->except('_token')]);
     }
@@ -30,7 +30,9 @@ class StudentController extends Controller
             $classes = Auth::user()->teacher->teacher_classes;
         }else if(Auth::user()->role == "admin"){
             $classes = Classes::all();
+
+            // return response()->json($classes);
         }
-        return view('admin.student.options', ['classes'=> $classes]);
+        return view('portal.student.options', ['classes'=> $classes]);
     }
 }

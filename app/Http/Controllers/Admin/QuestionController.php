@@ -26,7 +26,15 @@ class QuestionController extends Controller
         }
         $questions = Question::where($request->except('_token', 'year_id'))->get();
 
-        return view('admin.questions.index', ['questions'=> $questions,
+        // return response()->json(['questions'=> $questions,
+        //             'options'=> ['exam_id'=> $request->exam_id, 
+        //             'exam_paper_id'=> $request->exam_paper_id,
+        //             'classes_id'=> $exam_paper->classes_id,
+        //             'subject_id'=> $exam_paper->subject_id
+        //             ]
+        //         ]);
+
+        return view('portal.questions.index', ['questions'=> $questions,
                     'options'=> ['exam_id'=> $request->exam_id, 
                     'exam_paper_id'=> $request->exam_paper_id,
                     'classes_id'=> $exam_paper->classes_id,
@@ -38,7 +46,6 @@ class QuestionController extends Controller
     public function selectOptions(){
         $exams = Exam::all();
 
-<<<<<<< HEAD
         if(Auth::user()->role == "teacher"){
             $classes_ids = [];
             $subjects_ids = [];
@@ -60,17 +67,14 @@ class QuestionController extends Controller
 
             // return response()->json($classes);
 
-            return view('admin.questions.options', ['exams'=> $exams, 'classes'=> $classes, 'subjects'=> $subjects]);
+            return view('portal.questions.options', ['exams'=> $exams, 'classes'=> $classes, 'subjects'=> $subjects]);
         }else{
             $classes = Classes::All();
             $subjects = Subject::All();
-            return view('admin.questions.options', ['exams'=> $exams, 'classes'=> $classes, 'subjects'=> $subjects]);
+            return view('portal.questions.options', ['exams'=> $exams, 'classes'=> $classes, 'subjects'=> $subjects]);
 
         }
 
         
-=======
-        return view('admin.questions.options', ['exams'=> $exams]);
->>>>>>> a37d840ba0eb30773ff0e8b9711a87e94cb762fd
     }
 }

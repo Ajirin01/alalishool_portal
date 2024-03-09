@@ -11,6 +11,6 @@ class ClassesController extends Controller
 {
     public function index(){
         $classes = Classes::all();
-        return view("admin.classes.index", ['classes'=> $classes, 'noun'=> 'classe']);
+        return view("portal.classes.index", ['classes'=> $classes, 'noun'=> 'classe']);
     }
 }

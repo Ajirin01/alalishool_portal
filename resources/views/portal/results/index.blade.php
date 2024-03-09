@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('admin-content')
+@section('portal-content')
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary card-tabs">
@@ -42,7 +42,7 @@
                                                     <th>S/N</th>
                                                     <th>Student</th>
                                                     <th>Over</th>
-                                                    @if (Auth::user()->role == "admin" || Auth::user()->role == "teacher")
+                                                    @if (Auth::user()->role == "portal" || Auth::user()->role == "teacher")
                                                         <th>Score</th>
                                                         <th>Actions</th>
                                                     @endif
@@ -57,7 +57,7 @@
                                                         </td>
                                                         <td>{{$result->over}}</td>
                                                         
-                                                        @if (Auth::user()->role == "admin" || Auth::user()->role == "teacher")
+                                                        @if (Auth::user()->role == "portal" || Auth::user()->role == "teacher")
                                                             <x-general.noun-area :id="$result->id" :name="$result->score" :noun="'result'"/>
                                                         @endif
                                                     </tr>
@@ -68,7 +68,7 @@
                                                     <th>S/N</th>
                                                     <th>Student</th>
                                                     <th>Over</th>
-                                                    @if (Auth::user()->role == "admin" || Auth::user()->role == "teacher")
+                                                    @if (Auth::user()->role == "portal" || Auth::user()->role == "teacher")
                                                         <th>Score</th>
                                                         <th>Actions</th>
                                                     @endif

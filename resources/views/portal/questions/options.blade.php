@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('admin-content')
+@section('portal-content')
     
      <!-- SELECT2 EXAMPLE -->
      <div class="card card-default">
@@ -18,7 +18,7 @@
         </div>
         <!-- /.card-header -->
 
-        <form action="{{ route('manage-results') }}" method="get">
+        <form action="{{ route('manage-questions') }}" method="get">
             @csrf
             <div class="card-body">
                 <div class="row">
@@ -51,10 +51,9 @@
     
     
                     <div class="col-md-12">
-                        <input type="submit" value="Manage results" class="btn btn-primary form-control">
+                        <input type="submit" value="Manage questions" class="btn btn-primary form-control">
                     </div>
                 </div>
-                <!-- /.row -->
             </div>
         </form>
         

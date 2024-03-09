@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('admin-content')
+@section('portal-content')
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary card-tabs">

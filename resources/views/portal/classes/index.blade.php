@@ -1,16 +1,16 @@
 @extends('layouts.admin_layout')
 
-@section('admin-content')
+@section('portal-content')
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary card-tabs">
                 <div class="card-header p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-five-overlay-dark-tab" data-toggle="pill" href="#custom-tabs-five-overlay-dark" role="tab" aria-controls="custom-tabs-five-overlay-dark" aria-selected="true">Years</a>
+                            <a class="nav-link active" id="custom-tabs-five-overlay-dark-tab" data-toggle="pill" href="#custom-tabs-five-overlay-dark" role="tab" aria-controls="custom-tabs-five-overlay-dark" aria-selected="true">Classes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-five-overlay-dark-tab2" data-toggle="pill" href="#custom-tabs-five-overlay-dark2" role="tab" aria-controls="custom-tabs-five-overlay-dark2">Add Years</a>
+                            <a class="nav-link" id="custom-tabs-five-overlay-dark-tab2" data-toggle="pill" href="#custom-tabs-five-overlay-dark2" role="tab" aria-controls="custom-tabs-five-overlay-dark2">Add Classes</a>
                         </li>
                     </ul>
                 </div>
@@ -23,7 +23,7 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">Switch between tabs to manage years</h3>
+                                        <h3 class="card-title">Switch between tabs to manage classes</h3>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -31,27 +31,27 @@
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
-                                                    <th>Years</th>
+                                                    <th>Classes</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="year-table-body">
-                                                @foreach ($years as $i =>  $year)
+                                            <tbody id="classe-table-body">
+                                                @foreach ($classes as $i =>  $classe)
                                                     @php
                                                         $sn =  $i + 1 ;
                                                         // echo $sn;
                                                     @endphp
-                                                    <tr id="year{{$year->id}}row">
+                                                    <tr id="classe{{$classe->id}}row">
                                                         <td>{{ $i + 1 }}</td>
-                                                        {{-- render year component --}}
-                                                    <x-general.noun-area :id="$year->id" :name="$year->year" :noun="$noun" />
+                                                        {{-- render classe component --}}
+                                                    <x-general.noun-area :id="$classe->id" :name="$classe->name" :noun="$noun"/>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>S/N</th>
-                                                    <th>Years</th>
+                                                    <th>Classes</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </tfoot>
@@ -63,14 +63,14 @@
                             </div>
                         </div>
 
-                        {{-- Add years --}}
+                        {{-- Add classes --}}
                         <div class="tab-pane fade show" id="custom-tabs-five-overlay-dark2" role="tabpanel" aria-labelledby="custom-tabs-five-overlay-dark-tab2">
                             <div class="overlay-wrapper">
-                                {{-- add year component --}}
+                                {{-- add classe component --}}
                                 <div style="display: none; text-align: center" class="overlay dark" id="ajax-loader2"><i style="position: fixed; margin-top: 20vh" class="fas fa-3x fa-sync-alt fa-spin"></i></div>
-                                <x-general.noun-add :noun="$noun" :key="'year'"/>
+                                <x-general.noun-add :noun="$noun" :key="'name'"/>
                             </div>
-                            {{-- /. Add year --}}
+                            {{-- /. Add classe --}}
                         </div>
                     </div>
                     <!-- /.card -->
@@ -84,7 +84,7 @@
             let input = "text" + id + noun
 
             let data = {
-                year: $("#"+input).val()
+                name: $("#"+input).val()
             }
 
             updateData(data, id, noun)

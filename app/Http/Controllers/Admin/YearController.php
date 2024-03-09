@@ -11,6 +11,6 @@ class YearController extends Controller
 {
     public function index(){
         $years = Year::all();
-        return view("admin.years.index", ['years'=> $years, 'noun'=> 'year']);
+        return view("portal.years.index", ['years'=> $years, 'noun'=> 'year']);
     }
 }

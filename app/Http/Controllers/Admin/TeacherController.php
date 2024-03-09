@@ -15,6 +15,6 @@ class TeacherController extends Controller
         $teachers = Teacher::with('user')->get();
         $classes= Classes::all();
         $subjects = Subject::all();
-        return view('admin.teacher.index', ['teachers'=> $teachers, 'classes'=> $classes, 'subjects'=> $subjects]);
+        return view('portal.teacher.index', ['teachers'=> $teachers, 'classes'=> $classes, 'subjects'=> $subjects]);
     }
 }

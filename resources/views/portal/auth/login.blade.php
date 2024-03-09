@@ -28,7 +28,7 @@
             @if (Session::has('message'))
                 <div class="text-danger text-center">*{{ Session::get('message') }}*</div> <br>
             @endif
-            <form action="{{ route('admin-login-submit') }}" method="post">
+            <form action="{{ route('portal-login-submit') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                 <input name="email" type="email" class="form-control" placeholder="Email">
