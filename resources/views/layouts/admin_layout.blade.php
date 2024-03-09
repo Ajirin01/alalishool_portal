@@ -210,7 +210,7 @@
 
                 @if (!(Auth::user()->role == "admin" || Auth::user()->role == "teacher"))
                   <li class="nav-item">
-                    <a href="{{ url('http://alalischools.com/eresult') }}" class="nav-link">
+                    <a href="{{ url('result-portal') }}" class="nav-link">
                       <i class="nav-icon fa fa-book"></i>
                       <p>
                         Report Sheet
