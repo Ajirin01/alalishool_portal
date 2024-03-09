@@ -15,11 +15,11 @@ class Admin
                 return $next($request);
             }else{
                 Auth::logout();
-                return redirect(route('admin-login'));
+                return redirect(route('portal-login'));
             }
     
         }else{
-            return redirect(route('admin-login'));
+            return redirect(route('portal-login'));
         }
 
         
