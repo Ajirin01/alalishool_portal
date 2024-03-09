@@ -56,6 +56,10 @@ Route::group(['prefix'=> 'portal', 'middleware'=> 'admin'], function(){
     })->name('portal');
 });
 
+Route::get('/result-portal', function(){
+    return view('portal.result');
+});
+
 Route::group(['prefix'=> 'portal'], function(){
     Route::get('/login', [\App\Http\Controllers\Admin\AuthController::class, 'loginForm'])->name('portal-login');
     Route::post('/login', [\App\Http\Controllers\Admin\AuthController::class, 'loginSubmit'])->name('portal-login-submit');
